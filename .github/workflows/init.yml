@@ -4,21 +4,33 @@ on:
   push:
 
 jobs:
-   lighthouse:
-     runs-on: ubuntu-latest
-     steps:
-       - uses: actions/checkout@v2
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-       - name: Setup node
-         uses: actions/setup-node@v1
-         with:
-           node-version: "14.x"
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
 
-       - name: Install
-         run: cd frontend && npm ci && npm i -g http-server @lhci/cli
+      - name: Debug
+        run: |
+          cat frontend/package.json
+          cat frontend/package-lock.json
 
-       - name: Build
-         run: npm run build
+      - name: Install
+        run: |
+          cd frontend
+          npm ci
+          npm i -g http-server @lhci/cli
 
-       - name: LighthouseCI
-         run: lhci autorun
+      - name: Build
+        run: |
+          cd frontend
+          npm run build
+
+      - name: LighthouseCI
+        run: |
+          cd frontend
+          lhci autorun
