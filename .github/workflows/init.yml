@@ -7,23 +7,15 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup node
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "14.x"
-
-      - name: Debug
-        run: |
-          cat frontend/package.json
-          cat frontend/package-lock.json
+          node-version: 18
 
       - name: Install
         run: |
           cd frontend
-          npm ci
-          npm i -g http-server @lhci/cli
+          npm install && npm install -g @lhci/cli@0.14.x
 
       - name: Build
         run: |
